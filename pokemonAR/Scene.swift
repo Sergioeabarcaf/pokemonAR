@@ -8,6 +8,7 @@
 
 import SpriteKit
 import ARKit
+import GameplayKit
 
 class Scene: SKScene {
     
@@ -35,6 +36,7 @@ class Scene: SKScene {
         })
     }
     
+    
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
@@ -53,5 +55,27 @@ class Scene: SKScene {
             self.targetsCreated += 1
             self.targetsCount += 1
         }
+        
+        guard (self.view as? ARSKView) != nil else {return}
+        
+        //Fuente para generar numeros aleatorios
+        let rand = GKRandomSource.sharedRandom()
+        
+        //Creacion de dos matrices 4x4 con giro en x e y
+        let rotateX = SCNMatrix4MakeRotation(2.0 * Float.pi * rand.nextUniform(), 1, 0, 0)
+        let rotateY = SCNMatrix4MakeRotation(2.0 * Float.pi * rand.nextUniform(), 0, 1, 0)
+        
+        //Producto de matrices anteriores
+        let prodMatrix = SCNMatrix4Mult(rotateX, rotateY)
+        
+        //Creacion de matriz con movimiento en el eje Z a 1.5 metros de distancia
+        var transMatrix = SCNMatrix4Translate(SCNMatrix4Identity, 0, 0, -1.5)
+        
+        //Producto del movimiento de matrices y la distancia en Z
+        let position = SCNMatrix4Mult(prodMatrix, transMatrix)
+        
+        //Crear ancla para posicionar en AR
+        let ancla = ARAnchor(transform: position)
+
     }
 }
