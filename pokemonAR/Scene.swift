@@ -31,7 +31,7 @@ class Scene: SKScene {
         targetsCount = 0
         
         //Crear enemigos cada 3 segundos
-        self.timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (timer) in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: { (timer) in
             self.createTarget()
         })
     }
@@ -76,7 +76,7 @@ class Scene: SKScene {
         
         //Crear ancla para posicionar en AR
         let ancla = ARAnchor(transform: float4x4.init(position))
-        
+         
         //Añadir ancla a la escena
         sceneView.session.add(anchor: ancla)
 
