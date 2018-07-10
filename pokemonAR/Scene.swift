@@ -28,6 +28,11 @@ class Scene: SKScene {
         remainingLabel.position = CGPoint(x: 0, y: view.frame.midY-50)
         addChild(remainingLabel)
         targetsCount = 0
+        
+        //Crear enemigos cada 3 segundos
+        self.timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: { (timer) in
+            self.createTarget()
+        })
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -36,5 +41,17 @@ class Scene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+    }
+    
+    func createTarget(){
+        if(self.targetsCreated == 25){
+            self.timer?.invalidate()
+            self.timer = nil
+            return
+        }
+        else{
+            self.targetsCreated += 1
+            self.targetsCount += 1
+        }
     }
 }
