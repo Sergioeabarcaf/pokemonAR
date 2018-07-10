@@ -31,7 +31,7 @@ class Scene: SKScene {
         targetsCount = 0
         
         //Crear enemigos cada 3 segundos
-        self.timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: { (timer) in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (timer) in
             self.createTarget()
         })
     }
@@ -56,7 +56,7 @@ class Scene: SKScene {
             self.targetsCount += 1
         }
         
-        guard (self.view as? ARSKView) != nil else {return}
+        guard let sceneView = self.view as? ARSKView else {return}
         
         //Fuente para generar numeros aleatorios
         let rand = GKRandomSource.sharedRandom()
@@ -69,13 +69,16 @@ class Scene: SKScene {
         let prodMatrix = SCNMatrix4Mult(rotateX, rotateY)
         
         //Creacion de matriz con movimiento en el eje Z a 1.5 metros de distancia
-        var transMatrix = SCNMatrix4Translate(SCNMatrix4Identity, 0, 0, -1.5)
+        let transMatrix = SCNMatrix4Translate(SCNMatrix4Identity, 0, 0, -1.5)
         
         //Producto del movimiento de matrices y la distancia en Z
         let position = SCNMatrix4Mult(prodMatrix, transMatrix)
         
         //Crear ancla para posicionar en AR
-        let ancla = ARAnchor(transform: position)
+        let ancla = ARAnchor(transform: float4x4.init(position))
+        
+        //Añadir ancla a la escena
+        sceneView.session.add(anchor: ancla)
 
     }
 }
