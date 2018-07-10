@@ -31,7 +31,7 @@ class Scene: SKScene {
         targetsCount = 0
         
         //Crear enemigos cada 3 segundos
-        self.timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: { (timer) in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { (timer) in
             self.createTarget()
         })
     }
@@ -58,27 +58,29 @@ class Scene: SKScene {
         
         guard let sceneView = self.view as? ARSKView else {return}
         
+        
         //Fuente para generar numeros aleatorios
         let rand = GKRandomSource.sharedRandom()
-        
+
         //Creacion de dos matrices 4x4 con giro en x e y
-        let rotateX = SCNMatrix4MakeRotation(2.0 * Float.pi * rand.nextUniform(), 1, 0, 0)
-        let rotateY = SCNMatrix4MakeRotation(2.0 * Float.pi * rand.nextUniform(), 0, 1, 0)
+        let rotateX = float4x4.init(SCNMatrix4MakeRotation(2.0 * Float.pi * rand.nextUniform(), 1, 0, 0))
+        let rotateY = float4x4.init(SCNMatrix4MakeRotation(2.0 * Float.pi * rand.nextUniform(), 0, 1, 0))
         
         //Producto de matrices anteriores
-        let prodMatrix = SCNMatrix4Mult(rotateX, rotateY)
+        let prodMatrix = simd_mul(rotateX, rotateY)
         
         //Creacion de matriz con movimiento en el eje Z a 1.5 metros de distancia
-        let transMatrix = SCNMatrix4Translate(SCNMatrix4Identity, 0, 0, -1.5)
+        var translation = matrix_identity_float4x4
+        translation.columns.3.z = -1.5
         
         //Producto del movimiento de matrices y la distancia en Z
-        let position = SCNMatrix4Mult(prodMatrix, transMatrix)
+        let position = simd_mul(prodMatrix, translation)
         
         //Crear ancla para posicionar en AR
-        let ancla = ARAnchor(transform: float4x4.init(position))
+        let ancla = ARAnchor(transform: position)
          
         //Añadir ancla a la escena
         sceneView.session.add(anchor: ancla)
-
+ 
     }
 }
