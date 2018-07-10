@@ -62,6 +62,10 @@ class Scene: SKScene {
         //Buscar los nodos tocados por el usuario
         let hit = nodes(at: location)
         
+        if(targetsCreated >= 1){
+            gameOver()
+        }
+        
         //Si hay un sprite, animarlo hasta que desaparesca
         if let sprite = hit.first {
             goals += 1
@@ -89,8 +93,9 @@ class Scene: SKScene {
 
             //Actualizar los target que se elimino el pokemon
             self.targetsCount -= 1
+            
+            
         }
-        
     }
     
     func createTarget(){
@@ -130,5 +135,24 @@ class Scene: SKScene {
         //Añadir ancla a la escena
         sceneView.session.add(anchor: ancla)
  
+    }
+    
+    func gameOver(){
+        remainingLabel.removeFromParent()
+        let gameOver = SKSpriteNode(imageNamed: "gameover")
+        print("X Min\(view!.frame.minX), Mid\(view!.frame.midX), Max\(view!.frame.maxX)")
+        print("Y Min\(view!.frame.minY), Mid\(view!.frame.midY), Max\(view!.frame.maxY)")
+        gameOver.position = CGPoint(x: 0, y: 0)
+        addChild(gameOver)
+        
+        let gameTime = Date().timeIntervalSince(startTime)
+        
+        let gameTimeLabel = SKLabelNode(text: "Te ha llevado: \(Int(gameTime)) Segundos.")
+        gameTimeLabel.fontSize = 40
+        gameTimeLabel.fontColor = UIColor.red
+        gameTimeLabel.fontName = "Avenir Next"
+
+        addChild(gameTimeLabel)
+        
     }
 }
