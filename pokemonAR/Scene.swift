@@ -12,14 +12,27 @@ import GameplayKit
 
 class Scene: SKScene {
     
+    let startTime = Date()
+    
     let remainingLabel = SKLabelNode()
     var timer : Timer?
+    var goals = 0
     var targetsCreated = 0
     var targetsCount = 0 {
         didSet{
             self.remainingLabel.text = "Faltan: \(targetsCount)"
         }
     }
+    
+    //Sonidos
+    let bonita = SKAction.playSoundFileNamed("bonita", waitForCompletion: false)
+    let dimeloBonito = SKAction.playSoundFileNamed("dimelobonito", waitForCompletion: false)
+    let matando = SKAction.playSoundFileNamed("matando", waitForCompletion: false)
+    let sanchez = SKAction.playSoundFileNamed("sanchez", waitForCompletion: false)
+    let teQuiero = SKAction.playSoundFileNamed("tequiero", waitForCompletion: false)
+    let tufo = SKAction.playSoundFileNamed("tufo", waitForCompletion: false)
+    
+    
     
     override func didMove(to view: SKView) {
         // Setup your scene here
@@ -42,6 +55,41 @@ class Scene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //Localizar el toque
+        guard let touch = touches.first else {return}
+        let location = touch.location(in: self)
+        
+        //Buscar los nodos tocados por el usuario
+        let hit = nodes(at: location)
+        
+        //Si hay un sprite, animarlo hasta que desaparesca
+        if let sprite = hit.first {
+            goals += 1
+            let scaleOut = SKAction.scale(to: 2, duration: 0.4)
+            let fadeOut = SKAction.fadeOut(withDuration: 0.4)
+            let groupAction = SKAction.group([scaleOut, fadeOut])
+            let removeAction = SKAction.removeFromParent()
+            switch goals {
+            case 20:
+                let sequenceAction = SKAction.sequence([groupAction, removeAction, teQuiero])
+                sprite.run(sequenceAction)
+            case 15:
+                let sequenceAction = SKAction.sequence([groupAction, removeAction, dimeloBonito])
+                sprite.run(sequenceAction)
+            case 10:
+                let sequenceAction = SKAction.sequence([groupAction, removeAction, bonita])
+                sprite.run(sequenceAction)
+            case 5:
+                let sequenceAction = SKAction.sequence([groupAction, removeAction, tufo])
+                sprite.run(sequenceAction)
+            default:
+                let sequenceAction = SKAction.sequence([groupAction, removeAction, matando])
+                sprite.run(sequenceAction)
+            }
+
+            //Actualizar los target que se elimino el pokemon
+            self.targetsCount -= 1
+        }
         
     }
     

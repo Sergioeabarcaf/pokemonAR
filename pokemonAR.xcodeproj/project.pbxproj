@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0616F07220F53C92004CCC5C /* tufo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0616F06920F53C90004CCC5C /* tufo.mp3 */; };
+		0616F07320F53C92004CCC5C /* dimelobonito.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0616F06A20F53C90004CCC5C /* dimelobonito.mp3 */; };
+		0616F07520F53C92004CCC5C /* bonita.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0616F06C20F53C91004CCC5C /* bonita.mp3 */; };
+		0616F07620F53C92004CCC5C /* tequiero.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0616F06D20F53C91004CCC5C /* tequiero.mp3 */; };
+		0616F07920F53C92004CCC5C /* matando.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0616F07020F53C91004CCC5C /* matando.mp3 */; };
+		0616F07A20F53C92004CCC5C /* sanchez.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0616F07120F53C91004CCC5C /* sanchez.mp3 */; };
 		069C1BFF20EE312D0063EBA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069C1BFE20EE312D0063EBA6 /* AppDelegate.swift */; };
 		069C1C0120EE312D0063EBA6 /* Scene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 069C1C0020EE312D0063EBA6 /* Scene.sks */; };
 		069C1C0320EE312D0063EBA6 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069C1C0220EE312D0063EBA6 /* Scene.swift */; };
@@ -17,6 +23,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0616F06920F53C90004CCC5C /* tufo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tufo.mp3; sourceTree = "<group>"; };
+		0616F06A20F53C90004CCC5C /* dimelobonito.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dimelobonito.mp3; sourceTree = "<group>"; };
+		0616F06C20F53C91004CCC5C /* bonita.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bonita.mp3; sourceTree = "<group>"; };
+		0616F06D20F53C91004CCC5C /* tequiero.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tequiero.mp3; sourceTree = "<group>"; };
+		0616F07020F53C91004CCC5C /* matando.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = matando.mp3; sourceTree = "<group>"; };
+		0616F07120F53C91004CCC5C /* sanchez.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sanchez.mp3; sourceTree = "<group>"; };
 		069C1BFB20EE312D0063EBA6 /* pokemonAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pokemonAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		069C1BFE20EE312D0063EBA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		069C1C0020EE312D0063EBA6 /* Scene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Scene.sks; sourceTree = "<group>"; };
@@ -58,6 +70,12 @@
 		069C1BFD20EE312D0063EBA6 /* pokemonAR */ = {
 			isa = PBXGroup;
 			children = (
+				0616F06C20F53C91004CCC5C /* bonita.mp3 */,
+				0616F06A20F53C90004CCC5C /* dimelobonito.mp3 */,
+				0616F07020F53C91004CCC5C /* matando.mp3 */,
+				0616F07120F53C91004CCC5C /* sanchez.mp3 */,
+				0616F06D20F53C91004CCC5C /* tequiero.mp3 */,
+				0616F06920F53C90004CCC5C /* tufo.mp3 */,
 				069C1BFE20EE312D0063EBA6 /* AppDelegate.swift */,
 				069C1C0020EE312D0063EBA6 /* Scene.sks */,
 				069C1C0220EE312D0063EBA6 /* Scene.swift */,
@@ -129,7 +147,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				069C1C0120EE312D0063EBA6 /* Scene.sks in Resources */,
+				0616F07620F53C92004CCC5C /* tequiero.mp3 in Resources */,
+				0616F07220F53C92004CCC5C /* tufo.mp3 in Resources */,
 				069C1C0D20EE312F0063EBA6 /* LaunchScreen.storyboard in Resources */,
+				0616F07A20F53C92004CCC5C /* sanchez.mp3 in Resources */,
+				0616F07320F53C92004CCC5C /* dimelobonito.mp3 in Resources */,
+				0616F07520F53C92004CCC5C /* bonita.mp3 in Resources */,
+				0616F07920F53C92004CCC5C /* matando.mp3 in Resources */,
 				069C1C0A20EE312F0063EBA6 /* Assets.xcassets in Resources */,
 				069C1C0820EE312D0063EBA6 /* Main.storyboard in Resources */,
 			);
