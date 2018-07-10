@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 import ARKit
+import GameplayKit
 
 class ViewController: UIViewController, ARSKViewDelegate {
     
@@ -56,7 +57,7 @@ class ViewController: UIViewController, ARSKViewDelegate {
     
     func view(_ view: ARSKView, nodeFor anchor: ARAnchor) -> SKNode? {
         // Create and configure a node for the anchor added to the view's session.
-        return SKSpriteNode(imageNamed: "pokemon1")
+        return SKSpriteNode(imageNamed: self.randomName())
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
@@ -72,5 +73,11 @@ class ViewController: UIViewController, ARSKViewDelegate {
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
+    }
+    
+    func randomName() -> String{
+        let rand = GKRandomSource.sharedRandom()
+        let name = "pokemon\(rand.nextInt(upperBound: 4) + 1)"
+        return name
     }
 }

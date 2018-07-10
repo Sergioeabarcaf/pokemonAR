@@ -31,7 +31,7 @@ class Scene: SKScene {
         targetsCount = 0
         
         //Crear enemigos cada 3 segundos
-        self.timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { (timer) in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: { (timer) in
             self.createTarget()
         })
     }
