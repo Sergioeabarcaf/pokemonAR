@@ -13,11 +13,15 @@ import GameplayKit
 class Scene: SKScene {
     
     let startTime = Date()
+    var bonusTime = Date()
     
     let remainingLabel = SKLabelNode()
     var timer : Timer?
     var goals = 0
+    var bonus = 0.0
+    var score = 0.0
     var targetsCreated = 0
+    var targetsDelete = 0
     var targetsCount = 0 {
         didSet{
             self.remainingLabel.text = "Faltan: \(targetsCount)"
@@ -62,7 +66,7 @@ class Scene: SKScene {
         //Buscar los nodos tocados por el usuario
         let hit = nodes(at: location)
         
-        if(targetsCreated >= 1){
+        if(targetsCreated >= 25){
             gameOver()
         }
         
@@ -73,6 +77,21 @@ class Scene: SKScene {
             let fadeOut = SKAction.fadeOut(withDuration: 0.4)
             let groupAction = SKAction.group([scaleOut, fadeOut])
             let removeAction = SKAction.removeFromParent()
+            
+            let bonusDiferentTime = Date().timeIntervalSince(bonusTime)
+            print(bonusDiferentTime)
+            
+            if Int(bonusDiferentTime) <= 5 {
+                bonusTime = Date()
+                bonus += 1.2
+                print("LLeva bonus, T: \(Int(bonusDiferentTime)) B: \(bonus)")
+            }
+            else{
+                bonusTime = Date()
+                bonus = 0
+                print("NO lleva bonus, T: \(Int(bonusDiferentTime)) B: \(bonus)")
+            }
+            
             switch goals {
             case 20:
                 let sequenceAction = SKAction.sequence([groupAction, removeAction, teQuiero])
@@ -92,9 +111,12 @@ class Scene: SKScene {
             }
 
             //Actualizar los target que se elimino el pokemon
+            score += (5 + ( 5 * bonus ))
+            print(score)
             self.targetsCount -= 1
-            
-            
+        }
+        else{
+            bonus = 0.0
         }
     }
     
@@ -122,9 +144,12 @@ class Scene: SKScene {
         //Producto de matrices anteriores
         let prodMatrix = simd_mul(rotateX, rotateY)
         
-        //Creacion de matriz con movimiento en el eje Z a 1.5 metros de distancia
+        //Creacion de matriz con movimiento en el eje Z a una distancia random entre 0.5 y 2.0
         var translation = matrix_identity_float4x4
-        translation.columns.3.z = -1.5
+        let distRange = GKRandomDistribution(lowestValue: -20, highestValue: -5)
+        let distZ = Float(distRange.nextInt()) / 10
+        translation.columns.3.z = distZ
+
         
         //Producto del movimiento de matrices y la distancia en Z
         let position = simd_mul(prodMatrix, translation)
@@ -134,15 +159,18 @@ class Scene: SKScene {
          
         //Añadir ancla a la escena
         sceneView.session.add(anchor: ancla)
+        
+        //Eliminar ancla despues de 12 segundos
+        self.timer = Timer.scheduledTimer(withTimeInterval: 12, repeats: false, block: { (timer) in
+            sceneView.session.remove(anchor: ancla)
+            self.targetsDelete += 1
+        })
  
     }
     
     func gameOver(){
         remainingLabel.removeFromParent()
         let gameOver = SKSpriteNode(imageNamed: "gameover")
-        print("X Min\(view!.frame.minX), Mid\(view!.frame.midX), Max\(view!.frame.maxX)")
-        print("Y Min\(view!.frame.minY), Mid\(view!.frame.midY), Max\(view!.frame.maxY)")
-        gameOver.position = CGPoint(x: 0, y: 0)
         addChild(gameOver)
         
         let gameTime = Date().timeIntervalSince(startTime)
@@ -151,7 +179,6 @@ class Scene: SKScene {
         gameTimeLabel.fontSize = 40
         gameTimeLabel.fontColor = UIColor.red
         gameTimeLabel.fontName = "Avenir Next"
-
         addChild(gameTimeLabel)
         
     }
